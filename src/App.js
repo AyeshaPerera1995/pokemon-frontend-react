@@ -1,11 +1,11 @@
 // App.js
 import React from 'react';
-import UserList from './components/UserList';
+import PokemonList from './components/PokemonList';
 
 function App() {
   return (
     <div className="App">
-      <UserList />
+      <PokemonList/>
     </div>
   );
 }

@@ -1,9 +1,8 @@
-// UserList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
 
-function UserList() {
+function PokemonList() {
   const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
@@ -33,4 +32,4 @@ function UserList() {
   );
 }
 
-export default UserList;
+export default PokemonList;
