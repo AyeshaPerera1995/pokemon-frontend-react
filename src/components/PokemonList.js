@@ -5,6 +5,7 @@ import '../App.css';
 function PokemonList() {
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const initialized = useRef(false);
 
@@ -26,10 +27,17 @@ function PokemonList() {
       });
   }
 
+  const handleGameRestarted = () => {
+    getPokemonData()
+    setSelectedPokemon(null); // Reset selectedPokemon state
+    setButtonsDisabled(false); // Enable buttons
+  }
+
   const handleButtonClick = async (pokemonId) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/pokemon/id/${pokemonId}`);
       setSelectedPokemon(response.data);
+      setButtonsDisabled(true); // Disable buttons after one is clicked
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
@@ -37,7 +45,7 @@ function PokemonList() {
 
   return (
     <div className="pokemon-list">
-      <h1>Who's This Pokemon ?</h1>
+      <h1>Who's This Pokemon ?</h1> <button className="button" onClick={handleGameRestarted}>Restart</button>
       <div className="grid-container">
         {pokemons.map(pokemon => (
             pokemon.status && ( // if statement        
@@ -50,7 +58,7 @@ function PokemonList() {
 
       <div className="button-container">
       {pokemons.map(pokemon => (
-         <button key={pokemon.id} className="button" onClick={() => handleButtonClick(pokemon.id)}>
+         <button key={pokemon.id} className="button" onClick={() => handleButtonClick(pokemon.id)} disabled={buttonsDisabled}>
          {pokemon.name}
         </button>
       ))}
